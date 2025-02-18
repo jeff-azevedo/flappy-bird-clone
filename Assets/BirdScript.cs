@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BirdScript : MonoBehaviour
@@ -19,15 +20,19 @@ public class BirdScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0) && !isBirdDead)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && !isBirdDead)
         {
+            Debug.Log(isBirdDead);
             myRigidbody2D.linearVelocity = Vector2.up * flapStrength;
         }
+
+        if (transform.position.y > 16 || transform.position.y < -16)
+            logic.gameOver();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        logic.gameOver();
         isBirdDead = true;
+        logic.gameOver();
     }
 }

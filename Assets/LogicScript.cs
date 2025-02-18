@@ -7,6 +7,7 @@ public class LogicScript : MonoBehaviour
     public int playerScore;
     public Text scoreText;
     public GameObject gameOverScreen;
+    public GameObject menuScreen;
 
     private void Start()
     {
@@ -16,7 +17,11 @@ public class LogicScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("ESC");
+            if (!menuScreen.activeSelf)
+                menuScreen.SetActive(true);
+            else
+                menuScreen.SetActive(false);
+
         }
 
     }
@@ -34,9 +39,23 @@ public class LogicScript : MonoBehaviour
         Debug.Log("clicked");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-
     public void gameOver()
     {
         gameOverScreen.SetActive(true);
     }
+
+    public void quitGame()
+    {
+        Application.Quit();
+    }
+
+    //void OnApplicationFocus(bool hasFocus)
+    //{
+    //    if (!hasFocus)
+    //    {
+    //        Debug.Log("Jogo minimizado ou gesto de sair detectado!");
+    //        // Pode abrir um menu de pausa ou salvar progresso
+    //    }
+    //}
+
 }

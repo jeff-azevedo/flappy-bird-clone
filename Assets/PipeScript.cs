@@ -9,7 +9,7 @@ public class PipeScript : MonoBehaviour
     void Start()
     {
         moveSpeed = 1.2F;
-        deadZone = -16;
+        deadZone = -64;
     }
 
     // Update is called once per frame
