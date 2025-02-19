@@ -6,12 +6,20 @@ public class LogicScript : MonoBehaviour
 {
     public int playerScore;
     public Text scoreText;
+    public Text highScoreText;
     public GameObject gameOverScreen;
     public GameObject menuScreen;
+    public AudioSource pointSFX;
+    public AudioSource gameOverSFX;
 
     private void Start()
     {
-        Debug.Log("start");
+        if (!PlayerPrefs.HasKey("highScore"))
+        {
+            PlayerPrefs.SetInt("highScore", 0);
+        }
+
+        highScoreText.text = $"Highscore:{PlayerPrefs.GetInt("highScore")}";
     }
     void Update()
     {
@@ -29,19 +37,27 @@ public class LogicScript : MonoBehaviour
     [ContextMenu("Increase Score")]
     public void addScore()
     {
+        pointSFX.Play();
         playerScore += 1;
         scoreText.text = playerScore.ToString();
+
+        if (PlayerPrefs.GetInt("highScore") < playerScore)
+        {
+            PlayerPrefs.SetInt("highScore", playerScore);
+        }
+
+        highScoreText.text = $"Highscore:{PlayerPrefs.GetInt("highScore")}";
     }
 
     [ContextMenu("Restart Game")]
     public void restartGame()
     {
-        Debug.Log("clicked");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     public void gameOver()
     {
         gameOverScreen.SetActive(true);
+        gameOverSFX.Play();
     }
 
     public void quitGame()

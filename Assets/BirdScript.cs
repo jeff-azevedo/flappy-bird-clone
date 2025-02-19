@@ -22,12 +22,14 @@ public class BirdScript : MonoBehaviour
     {
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && !isBirdDead)
         {
-            Debug.Log(isBirdDead);
             myRigidbody2D.linearVelocity = Vector2.up * flapStrength;
         }
 
-        if (transform.position.y > 16 || transform.position.y < -16)
+        if ((transform.position.y > 16 || transform.position.y < -16) && !isBirdDead)
+        {
+            isBirdDead = true;
             logic.gameOver();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
